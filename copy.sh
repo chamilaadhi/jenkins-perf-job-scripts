@@ -9,3 +9,4 @@ fi
 scp common.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test
 scp run_apim_tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/apim-performance-execution
 scp run_ei_tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/ei-performance-execution
+scp run_is_tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/is-performance-execution

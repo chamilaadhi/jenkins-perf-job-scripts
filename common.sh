@@ -2,7 +2,9 @@
 # Check for errors. Piping to tee might hide the exit code of the script
 set -o pipefail
 eval "$(ssh-agent -s)"
-ssh-add ~/wso2-product-performance-test-key.pem
+ssh-add ~/keys/wso2-product-performance-test-key.pem
+# Check SSH connection
+ssh -o "StrictHostKeyChecking=no" -T git@github.com || true
 
 export PATH=$PATH:/usr/local/wum/bin
 export PATH=$PATH:/usr/local/apache-maven/bin
@@ -24,7 +26,7 @@ function clone_and_build() {
         else
             pushd $repo_dir
             git status
-            # git pull
+            git pull
             git status
             popd
         fi
@@ -43,28 +45,28 @@ function exit_handler() {
         echo "Build is successful."
         mkdir -p ${ARCHIVE_DIR}/successful
         if [[ -d $RESULTS_DIR ]]; then
-            mv $RESULTS_DIR ${ARCHIVE_DIR}/successful
-            if [[ ! -z $PRODUCT_REPO ]]; then
+            if [[ ! -z $PRODUCT_REPO ]] && [[ ! $PRODUCT_REPO =~ ^git@github\.com:.*\.git$  ]]; then
                 # Commit results:
                 # Must clone with SSH
-                git clone --depth 1 git@github.com:chrishantha/product-apim.git
+                git clone --depth 1 $PRODUCT_REPO
                 pushd product-apim
-                git checkout -b performance-test-${test_id}
+                git checkout -b performance-test-${TEST_ID}
                 mkdir -p performance/benchmarks
                 cp $RESULTS_DIR/summary.{csv,md} performance/benchmarks
                 git add performance/benchmarks/summary.{csv,md}
                 git commit -m "Update performance test results"
-                git push -u origin performance-test-${test_id}
+                git push -u origin performance-test-${TEST_ID}
                 popd
             else
                 echo "WARNING: The 'PRODUCT_REPO' environment variable is not set."
             fi
+            mv -v $RESULTS_DIR ${ARCHIVE_DIR}/successful
         fi
     else
         echo "Build failed!"
         mkdir -p ${ARCHIVE_DIR}/failed
         if [[ -d $RESULTS_DIR ]]; then
-            mv $RESULTS_DIR ${ARCHIVE_DIR}/failed
+            mv -v $RESULTS_DIR ${ARCHIVE_DIR}/failed
         fi
     fi
     exit $rv
