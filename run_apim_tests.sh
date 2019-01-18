@@ -16,7 +16,7 @@ tar -xf *.tar.gz
 ./cloudformation/get_wum_updated_wso2_product.sh -p wso2am -v ${PRODUCT_VERSION} -l ${PWD}
 
 ./cloudformation/run-performance-tests.sh -f *.tar.gz \
-    -d $RESULTS_DIR \
+    -d ${RESULTS_DIR} \
     -k ~/keys/apim-perf-test.pem -n 'apim-perf-test' \
     -j ~/apache-jmeter-4.0.tgz -o ~/jdk-8u192-linux-x64.tar.gz \
     -g ~/gcviewer-1.36-SNAPSHOT.jar -s 'wso2-apim-test-' \
@@ -28,6 +28,6 @@ tar -xf *.tar.gz
     -c ~/mysql-connector-java-8.0.13.jar \
     -A ${WSO2_API_MANAGER_EC2_INSTANCE_TYPE} \
     -D ${WSO2_API_MANAGER_EC2_RDS_DB_INSTANCE_CLASS} \
-    -t $NUMBER_OF_STACKS \
-    -p $PARALLEL_PARAMETER_OPTION \
-    -- $RUN_PERF_OPTS | tee ${CURRENT_DIR}/performance_test_run.log
+    -t ${NUMBER_OF_STACKS} \
+    -p ${PARALLEL_PARAMETER_OPTION} \
+    -- ${RUN_PERF_OPTS} | tee ${CURRENT_DIR}/performance_test_run.log
