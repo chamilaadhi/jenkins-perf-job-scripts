@@ -1,8 +1,6 @@
 #!/bin/bash -xe
 . ../common.sh
 
-export PRODUCT_REPO="git@github.com:wso2/product-is.git"
-
 declare -a repositories
 repositories+=("git@github.com:chrishantha/performance-common.git")
 repositories+=("git@github.com:chrishantha/performance-is.git")

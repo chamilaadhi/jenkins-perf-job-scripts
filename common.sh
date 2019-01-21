@@ -45,18 +45,23 @@ function exit_handler() {
         echo "Build is successful."
         mkdir -p ${ARCHIVE_DIR}/successful
         if [[ -d $RESULTS_DIR ]]; then
-            if [[ ! -z $PRODUCT_REPO ]] && [[ ! $PRODUCT_REPO =~ ^git@github\.com:.*\.git$  ]]; then
-                # Commit results:
-                # Must clone with SSH
-                git clone --depth 1 $PRODUCT_REPO
-                pushd product-apim
-                git checkout -b performance-test-${TEST_ID}
-                mkdir -p performance/benchmarks
-                cp $RESULTS_DIR/summary.{csv,md} performance/benchmarks
-                git add performance/benchmarks/summary.{csv,md}
-                git commit -m "Update performance test results"
-                git push -u origin performance-test-${TEST_ID}
-                popd
+            if [[ ! -z $PRODUCT_REPO ]]; then
+                if [[ $PRODUCT_REPO =~ ^git@github\.com:.*\.git$ ]]; then
+                    # Commit results:
+                    # Must clone with SSH
+                    git clone --depth 1 $PRODUCT_REPO
+                    repo_dir=$(basename "$PRODUCT_REPO" .git)
+                    pushd $repo_dir
+                    git checkout -b performance-test-${TEST_ID}
+                    mkdir -p performance/benchmarks
+                    cp $RESULTS_DIR/summary.{csv,md} performance/benchmarks
+                    git add performance/benchmarks/summary.{csv,md}
+                    git commit -m "Update performance test results"
+                    git push -u origin performance-test-${TEST_ID}
+                    popd
+                else
+                    echo "WARNING: The 'PRODUCT_REPO' environment variable not a valid SSH URL."
+                fi
             else
                 echo "WARNING: The 'PRODUCT_REPO' environment variable is not set."
             fi
