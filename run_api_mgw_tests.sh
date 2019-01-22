@@ -18,8 +18,8 @@ tar -xf *.tar.gz
     -d ${RESULTS_DIR} \
     -k ~/keys/apim-perf-test.pem -n 'apim-perf-test' \
     -j ~/apache-jmeter-4.0.tgz -o ~/jdk-8u192-linux-x64.tar.gz \
-    -g ~/gcviewer-1.36-SNAPSHOT.jar -s 'wso2-apim-test-' \
-    -b apimperformancetest -r 'us-east-1' \
+    -g ~/gcviewer-1.36-SNAPSHOT.jar -s 'wso2-api-mgw-test-' \
+    -b apimgwperformancetest -r 'us-east-1' \
     -J "${JMETER_CLIENT_EC2_INSTANCE_TYPE}" \
     -S "${JMETER_SERVER_EC2_INSTANCE_TYPE}" \
     -N "${BACKEND_EC2_INSTANCE_TYPE}" \
