@@ -24,7 +24,8 @@ tar -xf *.tar.gz
     -S "${JMETER_SERVER_EC2_INSTANCE_TYPE}" \
     -N "${BACKEND_EC2_INSTANCE_TYPE}" \
     -a ${PWD}/wso2am.zip \
-    -c ${PWD}/wso2am-micro-gw.zip \
+    -m ${PWD}/wso2am-micro-gw.zip \
+    -c ~/mysql-connector-java-8.0.13.jar \
     -A ${WSO2_API_MANAGER_EC2_INSTANCE_TYPE} \
     -D ${WSO2_API_MANAGER_EC2_RDS_DB_INSTANCE_CLASS} \
     -t ${NUMBER_OF_STACKS} \
