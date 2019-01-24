@@ -26,6 +26,7 @@ tar -xf *.tar.gz
     -a ${PWD}/wso2am.zip \
     -c ${PWD}/wso2am-micro-gw.zip \
     -A ${WSO2_API_MANAGER_EC2_INSTANCE_TYPE} \
+    -D ${WSO2_API_MANAGER_EC2_RDS_DB_INSTANCE_CLASS} \
     -t ${NUMBER_OF_STACKS} \
     -p ${PARALLEL_PARAMETER_OPTION} \
     -- ${RUN_PERF_OPTS} | tee ${CURRENT_DIR}/performance_test_run.log
