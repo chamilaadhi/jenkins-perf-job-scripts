@@ -11,8 +11,8 @@ echo "Extracting scripts..."
 cd performance-apim/distribution/target
 tar -xf *.tar.gz
 
-./cloudformation/get_wum_updated_wso2_product.sh -p wso2am -v ${PRODUCT_VERSION} -l ${PWD}
-./cloudformation/get_wum_updated_wso2_product.sh -p wso2am-micro-gw -v ${PRODUCT_VERSION} -l ${PWD}
+./cloudformation/get-wum-updated-wso2-product.sh -p wso2am -v ${PRODUCT_VERSION} -l ${PWD}
+./cloudformation/get-wum-updated-wso2-product.sh -p wso2am-micro-gw -v ${PRODUCT_VERSION} -l ${PWD}
 
 ./cloudformation/run-micro-gw-performance-tests.sh -f *.tar.gz \
     -d ${RESULTS_DIR} \

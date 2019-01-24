@@ -3,27 +3,29 @@
 
 declare -a repositories
 repositories+=("git@github.com:chrishantha/performance-common.git")
-repositories+=("git@github.com:chrishantha/performance-ei.git")
+repositories+=("git@github.com:chrishantha/performance-apim.git")
 
 clone_and_build "${repositories[@]}"
 
 echo "Extracting scripts..."
-cd performance-ei/distribution/target
+cd performance-apim/distribution/target
 tar -xf *.tar.gz
 
-./cloudformation/get_wum_updated_wso2_product.sh -p wso2ei -v ${PRODUCT_VERSION} -l ${PWD}
+./cloudformation/get-wum-updated-wso2-product.sh -p wso2am -v ${PRODUCT_VERSION} -l ${PWD}
 
 ./cloudformation/run-performance-tests.sh -f *.tar.gz \
     -d ${RESULTS_DIR} \
-    -k ~/keys/ei-perf-test.pem -n 'ei-perf-test' \
+    -k ~/keys/apim-perf-test.pem -n 'apim-perf-test' \
     -j ~/apache-jmeter-4.0.tgz -o ~/jdk-8u192-linux-x64.tar.gz \
-    -g ~/gcviewer-1.36-SNAPSHOT.jar -s 'wso2-ei-test-' \
-    -b ei-performance-test -r 'us-east-1' \
+    -g ~/gcviewer-1.36-SNAPSHOT.jar -s 'wso2-apim-test-' \
+    -b apimperformancetest -r 'us-east-1' \
     -J "${JMETER_CLIENT_EC2_INSTANCE_TYPE}" \
     -S "${JMETER_SERVER_EC2_INSTANCE_TYPE}" \
     -N "${BACKEND_EC2_INSTANCE_TYPE}" \
-    -e ${PWD}/wso2ei.zip \
-    -E ${WSO2_ENTERPISE_INTEGRATOR_EC2_INSTANCE_TYPE} \
+    -a ${PWD}/wso2am.zip \
+    -c ~/mysql-connector-java-8.0.13.jar \
+    -A ${WSO2_API_MANAGER_EC2_INSTANCE_TYPE} \
+    -D ${WSO2_API_MANAGER_EC2_RDS_DB_INSTANCE_CLASS} \
     -t ${NUMBER_OF_STACKS} \
     -p ${PARALLEL_PARAMETER_OPTION} \
     -- ${RUN_PERF_OPTS} | tee ${CURRENT_DIR}/performance_test_run.log

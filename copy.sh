@@ -1,13 +1,7 @@
 #!/bin/bash -xe
 
-git="git@github.com:chrishantha/performance-common.git"
-if [[ ! $git =~ ^git@github\.com:.*\.git$ ]]; then
-    echo "Invalid repository!"
-    exit 1
-fi
-
 scp common.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test
-scp run_apim_tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/apim-performance-execution
-scp run_api_mgw_tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/apim-microgw-performance-execution
-scp run_ei_tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/ei-performance-execution
-scp run_is_tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/is-performance-execution
+scp run-apim-tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/apim-performance-execution
+scp run-api-mgw-tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/apim-microgw-performance-execution
+scp run-ei-tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/ei-performance-execution
+scp run-is-tests.sh wso2-product-performance-test:/build/jenkins-home/workspace/product-performance-test/is-performance-execution
