@@ -29,4 +29,5 @@ tar -xf *.tar.gz
     -t ${NUMBER_OF_STACKS} \
     -p ${PARALLEL_PARAMETER_OPTION} \
     -q ~/jdk-11.0.5_linux-x64_bin.tar.gz \
+    -u ${BUILD_USER_EMAIL} \
     -- ${RUN_PERF_OPTS} | tee ${CURRENT_DIR}/performance_test_run.log
